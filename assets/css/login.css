@@ -1,0 +1,563 @@
+/* Login Page Specific Styles */
+
+/* Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+    min-height: 100vh;
+    overflow-x: hidden;
+    color: #000;
+}
+
+/* Login Container */
+.login-container {
+    display: flex;
+    min-height: 100vh;
+    background: #000;
+}
+
+/* Left Side - LBC Overview */
+.login-left {
+    flex: 1;
+    background: linear-gradient(135deg, #000000 0%, #1e3a8a 50%, #3b82f6 100%);
+    color: #fff;
+    padding: 3rem;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.login-left::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.03)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.03)"/><circle cx="50" cy="10" r="0.5" fill="rgba(255,255,255,0.02)"/><circle cx="10" cy="50" r="0.5" fill="rgba(255,255,255,0.02)"/><circle cx="90" cy="30" r="0.5" fill="rgba(255,255,255,0.02)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+    pointer-events: none;
+}
+
+.lbc-overview {
+    max-width: 600px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+}
+
+/* Logo Section */
+.logo-section {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.logo-section h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(45deg, #3b82f6, #60a5fa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.logo-img {
+    height: 50px;
+    width: auto;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+}
+
+.logo-section:hover .logo-img {
+    transform: scale(1.05);
+}
+
+.tagline {
+    font-size: 1.2rem;
+    color: #b8b8b8;
+    font-weight: 300;
+}
+
+/* About Section */
+.about-section {
+    margin-bottom: 3rem;
+}
+
+.about-section h2 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    color: #60a5fa;
+    font-weight: 600;
+}
+
+.about-section p {
+    line-height: 1.8;
+    margin-bottom: 1rem;
+    color: #d0d0d0;
+    font-weight: 300;
+}
+
+/* Upcoming Gigs */
+.upcoming-gigs h3 {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    color: #3b82f6;
+    font-weight: 600;
+}
+
+.gig-carousel {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    padding: 1rem 0;
+    scroll-snap-type: x mandatory;
+}
+
+.gig-carousel::-webkit-scrollbar {
+    height: 6px;
+}
+
+.gig-carousel::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+}
+
+.gig-carousel::-webkit-scrollbar-thumb {
+    background: rgba(59, 130, 246, 0.5);
+    border-radius: 3px;
+}
+
+.gig-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 1.5rem;
+    min-width: 200px;
+    scroll-snap-align: start;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.gig-card:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(59, 130, 246, 0.5);
+}
+
+.gig-card.active {
+    background: rgba(59, 130, 246, 0.2);
+    border-color: #3b82f6;
+}
+
+.gig-date {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.gig-date .day {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #60a5fa;
+    line-height: 1;
+}
+
+.gig-date .month {
+    font-size: 0.9rem;
+    color: #b8b8b8;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.gig-info h4 {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    color: #fff;
+    font-weight: 600;
+}
+
+.gig-info .genre {
+    font-size: 0.85rem;
+    color: #3b82f6;
+    margin-bottom: 0.5rem;
+}
+
+.gig-info .time {
+    font-size: 0.9rem;
+    color: #b8b8b8;
+    margin-bottom: 0.3rem;
+}
+
+.gig-info .price {
+    font-size: 1rem;
+    color: #60a5fa;
+    font-weight: 600;
+}
+
+/* Right Side - Login Form */
+.login-right {
+    flex: 0 0 450px;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.login-form-container {
+    width: 100%;
+    max-width: 400px;
+}
+
+.login-form-container h2 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    color: #1e3a8a;
+    font-weight: 600;
+}
+
+.login-subtitle {
+    color: #666;
+    margin-bottom: 2rem;
+    font-weight: 300;
+}
+
+/* Form Styles */
+.login-form {
+    margin-bottom: 2rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #333;
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    border: 2px solid #e1e1e1;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: #f8f9fa;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #3b82f6;
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.toggle-password {
+    position: absolute;
+    right: 1rem;
+    top: 2.5rem;
+    color: #666;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.toggle-password:hover {
+    color: #3b82f6;
+}
+
+/* Form Options */
+.form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.remember-me input {
+    margin-right: 0.5rem;
+    width: auto;
+}
+
+.forgot-password {
+    color: #3b82f6;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+}
+
+.forgot-password:hover {
+    color: #1e40af;
+}
+
+/* Login Button */
+.login-btn {
+    width: 100%;
+    padding: 1rem;
+    background: linear-gradient(45deg, #1e3a8a, #3b82f6);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.login-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
+}
+
+.login-btn:active {
+    transform: translateY(0);
+}
+
+/* Divider */
+.divider {
+    text-align: center;
+    margin: 2rem 0;
+    position: relative;
+}
+
+.divider::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: #e1e1e1;
+}
+
+.divider span {
+    background: #fff;
+    padding: 0 1rem;
+    color: #666;
+    font-size: 0.9rem;
+    position: relative;
+    z-index: 1;
+}
+
+/* Social Login */
+.social-login {
+    margin-bottom: 2rem;
+}
+
+.social-btn {
+    width: 100%;
+    padding: 0.875rem;
+    border: 2px solid #e1e1e1;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    background: #fff;
+}
+
+.social-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.social-btn.facebook {
+    color: #1e3a8a;
+    border-color: #1e3a8a;
+}
+
+.social-btn.facebook:hover {
+    background: #1e3a8a;
+    color: #fff;
+}
+
+.social-btn.google {
+    color: #3b82f6;
+    border-color: #3b82f6;
+}
+
+.social-btn.google:hover {
+    background: #3b82f6;
+    color: #fff;
+}
+
+/* Signup Link */
+.signup-link {
+    text-align: center;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.signup-link a {
+    color: #3b82f6;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.signup-link a:hover {
+    color: #1e40af;
+}
+
+/* Notification Styles */
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    color: white;
+    font-weight: 500;
+    z-index: 1000;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    max-width: 300px;
+    word-wrap: break-word;
+}
+
+.notification-success {
+    background: linear-gradient(45deg, #4caf50, #45a049);
+}
+
+.notification-error {
+    background: linear-gradient(45deg, #f44336, #da190b);
+}
+
+.notification-info {
+    background: linear-gradient(45deg, #3b82f6, #1e40af);
+}
+
+/* Registration Modal */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    animation: fadeIn 0.3s ease;
+}
+
+.registration-modal {
+    background: white;
+    border-radius: 15px;
+    padding: 2rem;
+    max-width: 500px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    animation: slideUp 0.3s ease;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from { transform: translateY(50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .login-left {
+        padding: 2rem;
+    }
+    
+    .logo-section h1 {
+        font-size: 2.5rem;
+    }
+    
+    .login-right {
+        flex: 0 0 400px;
+    }
+}
+
+@media (max-width: 768px) {
+    .login-container {
+        flex-direction: column;
+    }
+    
+    .login-left {
+        min-height: auto;
+        padding: 2rem;
+    }
+    
+    .login-right {
+        flex: 1;
+        padding: 1.5rem;
+    }
+    
+    .gig-carousel {
+        flex-direction: column;
+    }
+    
+    .gig-card {
+        min-width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .login-left {
+        padding: 1.5rem;
+    }
+    
+    .logo-section h1 {
+        font-size: 2rem;
+    }
+    
+    .about-section h2 {
+        font-size: 1.5rem;
+    }
+    
+    .upcoming-gigs h3 {
+        font-size: 1.3rem;
+    }
+    
+    .login-right {
+        padding: 1rem;
+    }
+    
+    .login-form-container h2 {
+        font-size: 1.5rem;
+    }
+}

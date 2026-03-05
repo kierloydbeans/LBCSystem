@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lost Boys Club - Where Music Comes Alive</title>
+    <link rel="stylesheet" href="../assets/css/landing.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="landing-container">
+        <!-- Navigation -->
+        <nav class="navbar" id="navbar">
+            <div class="nav-container">
+                <a href="#" class="nav-logo">
+                    <img src="../assets/images/lbc_logo.jpg" alt="Lost Boys Club" class="nav-logo-img">
+                    Lost Boys Club
+                </a>
+                
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="#home" class="nav-link">Home</a></li>
+                    <li><a href="#events" class="nav-link">Events</a></li>
+                    <li><a href="#about" class="nav-link">About</a></li>
+                    <li><a href="bands.html" class="nav-link">Bands</a></li>
+                    <li><a href="tickets.html" class="nav-link">My Tickets</a></li>
+                </ul>
+                
+                <div class="nav-actions">
+                    <div class="user-menu" id="userMenu">
+                        <div class="user-avatar" id="userAvatar">U</div>
+                        <button class="logout-btn" id="logoutBtn">Logout</button>
+                    </div>
+                    <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <section class="hero" id="home">
+            <div class="hero-content">
+                <h1>Lost Boys Club</h1>
+                <p class="hero-subtitle">Where Music Comes Alive</p>
+                <p class="hero-description">
+                    Welcome to the premier destination for live music enthusiasts. Experience authentic, raw performances in an intimate setting where every beat matters and every connection is personal. Join our community of music lovers, artists, and dreamers.
+                </p>
+                <div class="hero-cta">
+                    <a href="#events" class="btn-primary">Explore Events</a>
+                    <a href="#about" class="btn-secondary">Learn More</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Upcoming Events Section -->
+        <section class="events-section" id="events">
+            <div class="section-container">
+                <div class="section-header">
+                    <h2 class="section-title">Upcoming Events</h2>
+                    <p class="section-subtitle">Don't miss out on these incredible performances</p>
+                </div>
+                
+                <div class="events-grid" id="eventsGrid">
+                    <!-- Events will be loaded here from API -->
+                </div>
+                
+                <div style="text-align: center;">
+                    <a href="#" class="btn-primary">View All Events</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section class="about-section" id="about">
+            <div class="about-content">
+                <h2 class="about-title">About Lost Boys Club</h2>
+                <p class="about-text">
+                    Since our inception, Lost Boys Club has been the launching pad for countless local bands and the stage where legendary performances happen. We're not just a venue – we're a family of music enthusiasts who believe in the transformative power of live music.
+                </p>
+                <p class="about-text">
+                    Our intimate setting ensures you're never too far from the action, feeling every beat and connecting with artists on a personal level. Whether you're here to discover new talent or support your favorite bands, you'll find your place in our community.
+                </p>
+                
+                <div class="features">
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3 class="feature-title">Intimate Setting</h3>
+                        <p class="feature-description">Get up close and personal with artists in our cozy venue</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-guitar"></i>
+                        </div>
+                        <h3 class="feature-title">Live Music</h3>
+                        <p class="feature-description">Experience raw, authentic performances every night</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <h3 class="feature-title">Community</h3>
+                        <p class="feature-description">Join a family of music lovers and artists</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="../assets/images/lbc_logo.jpg" alt="Lost Boys Club" class="footer-logo-img">
+                    Lost Boys Club
+                </div>
+                
+                <div class="footer-links">
+                    <a href="#home">Home</a>
+                    <a href="#events">Events</a>
+                    <a href="bands.html">Bands</a>
+                    <a href="#about">About</a>
+                    <a href="tickets.html">My Tickets</a>
+                </div>
+                <a href="#" class="footer-link">Privacy Policy</a>
+                
+                <div class="social-links">
+                    <a href="#" class="social-link">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="social-link">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="social-link">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="social-link">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                </div>
+                
+                <div class="footer-bottom">
+                    <p>&copy; 2026 Lost Boys Club. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="../assets/js/landing.js"></script>
+</body>
+</html>

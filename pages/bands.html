@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bands - Lost Boys Club</title>
+    <link rel="stylesheet" href="../assets/css/landing.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="landing-container">
+        <!-- Navigation -->
+        <nav class="navbar" id="navbar">
+            <div class="nav-container">
+                <a href="landing.html" class="nav-logo">
+                    <img src="../assets/images/lbc_logo.jpg" alt="Lost Boys Club" class="nav-logo-img">
+                    Lost Boys Club
+                </a>
+                
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="landing.html" class="nav-link">Home</a></li>
+                    <li><a href="landing.html#events" class="nav-link">Events</a></li>
+                    <li><a href="landing.html#about" class="nav-link">About</a></li>
+                    <li><a href="bands.html" class="nav-link active">Bands</a></li>
+                    <li><a href="tickets.html" class="nav-link">My Tickets</a></li>
+                </ul>
+                
+                <div class="nav-actions">
+                    <div class="user-menu" id="userMenu" style="display: none;">
+                        <div class="user-avatar" id="userAvatar">U</div>
+                        <button class="logout-btn" id="logoutBtn">Logout</button>
+                    </div>
+                </div>
+                
+                <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Bands Section -->
+        <section class="bands-section">
+            <div class="section-container">
+                <div class="section-header">
+                    <h1 class="section-title">Our Bands</h1>
+                    <p class="section-subtitle">Meet the talented artists who make Lost Boys Club their home</p>
+                </div>
+                
+                <div class="bands-grid" id="bandsGrid">
+                    <!-- Bands will be loaded here dynamically -->
+                    <div class="loading-spinner">
+                        <div class="spinner"></div>
+                        <p>Loading bands...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Band Details Modal -->
+        <div class="band-modal" id="bandModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="modalBandName">Band Name</h2>
+                    <button class="modal-close" id="modalClose">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="band-details">
+                        <div class="band-image-container">
+                            <img id="modalBandImage" src="" alt="Band" class="band-image">
+                            <div class="band-genre" id="modalBandGenre">Genre</div>
+                        </div>
+                        <div class="band-info">
+                            <p id="modalBandDescription" class="band-description">Band description goes here...</p>
+                            <div class="band-actions">
+                                <a href="#" id="modalFacebookUrl" class="btn btn-primary" target="_blank" style="display: none;">
+                                    <i class="fab fa-facebook"></i> Facebook
+                                </a>
+                                <div id="modalSpotifyEmbed" class="spotify-embed" style="display: none;">
+                                    <!-- Spotify embed will be loaded here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="../assets/images/lbc_logo.jpg" alt="Lost Boys Club" class="footer-logo-img">
+                    Lost Boys Club
+                </div>
+                <div class="footer-links">
+                    <a href="landing.html">Home</a>
+                    <a href="landing.html#events">Events</a>
+                    <a href="bands.html">Bands</a>
+                    <a href="landing.html#about">About</a>
+                    <a href="tickets.html">My Tickets</a>
+                </div>
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-spotify"></i></a>
+                </div>
+                <div class="footer-bottom">
+                    <p>&copy; 2026 Lost Boys Club. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="../assets/js/bands.js"></script>
+</body>
+</html>
