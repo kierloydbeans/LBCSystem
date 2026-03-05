@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Lost Boys Club</title>
+    <link rel="stylesheet" href="assets/css/login.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-left">
+            <div class="lbc-overview">
+                <div class="logo-section">
+                    <h1><img src="assets/images/lbc_logo.jpg" alt="Lost Boys Club" class="logo-img"> Lost Boys Club</h1>
+                    <p class="tagline">Where Music Comes Alive</p>
+                </div>
+                
+                <div class="about-section">
+                    <h2>Welcome to the Underground</h2>
+                    <p>Lost Boys Club is the premier destination for live music enthusiasts who crave authentic, raw performances. We're not just a venue – we're a community of music lovers, artists, and dreamers who believe in the power of live music to transform and unite.</p>
+                    <p>Since our inception, we've been the launching pad for countless local bands and the stage where legendary performances happen. Our intimate setting ensures you're never too far from the action, feeling every beat and connecting with artists on a personal level.</p>
+                </div>
+
+                <div class="upcoming-gigs">
+                    <h3>Upcoming Gigs</h3>
+                    <div class="gig-carousel">
+                        <div class="gig-card active">
+                            <div class="gig-date">
+                                <span class="day">15</span>
+                                <span class="month">MAR</span>
+                            </div>
+                            <div class="gig-info">
+                                <h4>Midnight Echoes</h4>
+                                <p class="genre">Alternative Rock</p>
+                                <p class="time">8:00 PM</p>
+                                <p class="price">₱350</p>
+                            </div>
+                        </div>
+                        <div class="gig-card">
+                            <div class="gig-date">
+                                <span class="day">22</span>
+                                <span class="month">MAR</span>
+                            </div>
+                            <div class="gig-info">
+                                <h4>Neon Dreams</h4>
+                                <p class="genre">Synthwave</p>
+                                <p class="time">9:00 PM</p>
+                                <p class="price">₱400</p>
+                            </div>
+                        </div>
+                        <div class="gig-card">
+                            <div class="gig-date">
+                                <span class="day">29</span>
+                                <span class="month">MAR</span>
+                            </div>
+                            <div class="gig-info">
+                                <h4>Velvet Underground</h4>
+                                <p class="genre">Indie Rock</p>
+                                <p class="time">8:30 PM</p>
+                                <p class="price">₱300</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="login-right">
+            <div class="login-form-container">
+                <h2>Join the Club</h2>
+                <p class="login-subtitle">Access your tickets and never miss a show</p>
+                
+                <form id="loginForm" class="login-form">
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" required placeholder="your@email.com">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" required placeholder="Enter your password">
+                        <i class="fas fa-eye toggle-password"></i>
+                    </div>
+                    
+                    <div class="form-options">
+                        <label class="remember-me">
+                            <input type="checkbox" name="remember">
+                            <span>Remember me</span>
+                        </label>
+                        <a href="#" class="forgot-password">Forgot password?</a>
+                    </div>
+                    
+                    <button type="submit" class="login-btn">Enter the Club</button>
+                </form>
+                
+                <div class="divider">
+                    <span>or</span>
+                </div>
+                
+                <div class="social-login">
+                    <button class="social-btn facebook">
+                        <i class="fab fa-facebook-f"></i>
+                        Continue with Facebook
+                    </button>
+                    <button class="social-btn google">
+                        <i class="fab fa-google"></i>
+                        Continue with Google
+                    </button>
+                </div>
+                
+                <div class="signup-link">
+                    <p>New to Lost Boys Club? <a href="#">Create an account</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/login.js"></script>
+</body>
+</html>
