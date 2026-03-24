@@ -76,7 +76,7 @@ function displayBands(bands) {
         <div class="band-card" onclick="showBandDetails(${band.id})">
             <div class="band-card-image">
                 ${band.band_image ? 
-                    `<img src="${band.band_image}" alt="${band.name}" onerror="this.parentElement.innerHTML='<div class=\\'band-image-placeholder\\'><i class=\\'fas fa-users\\'></i></div>'">` :
+                    `<img src="../${band.band_image}" alt="${band.name}" onerror="this.parentElement.innerHTML='<div class=\\'band-image-placeholder\\'><i class=\\'fas fa-users\\'></i></div>'">` :
                     `<div class="band-image-placeholder">
                         <i class="fas fa-users"></i>
                     </div>`
@@ -131,7 +131,7 @@ function populateModal(band) {
     // Handle band image
     const modalBandImage = document.getElementById('modalBandImage');
     if (band.band_image) {
-        modalBandImage.src = band.band_image;
+        modalBandImage.src = '../' + band.band_image;
         modalBandImage.style.display = 'block';
         modalBandImage.onerror = function() {
             this.style.display = 'none';

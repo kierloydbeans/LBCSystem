@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Lost Boys Club</title>
+    <link rel="stylesheet" href="../assets/css/landing.css">
+    <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Bangers&family=Creepster&family=Special+Elite&family=UnifrakturMaguntia&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="landing-container">
+        <!-- Navigation -->
+        <nav class="navbar" id="navbar">
+            <div class="nav-container">
+                <a href="landing.html" class="nav-logo">
+                    <img src="../assets/images/lbc_logo.jpg" alt="Lost Boys Club" class="nav-logo-img">
+                    Lost Boys Club
+                </a>
+                
+                <div class="nav-menu" id="navMenu">
+                    <a href="landing.html#home" class="nav-link">Home</a>
+                    <a href="events.html" class="nav-link">Events</a>
+                    <a href="bands.html" class="nav-link">Bands</a>
+                    <a href="admin.html" class="nav-link active">Admin</a>
+                    <a href="landing.html#about" class="nav-link">About</a>
+                </div>
+                
+                <div class="nav-actions">
+                    <div id="userMenu" style="display: none;" class="user-menu">
+                        <span id="userName">Admin</span>
+                        <div class="user-dropdown">
+                            <a href="#profile">Profile</a>
+                            <a href="#tickets">My Tickets</a>
+                            <a href="#" id="logoutBtn">Logout</a>
+                        </div>
+                    </div>
+                    <div id="loginRegisterBtns" class="auth-buttons">
+                        <a href="../index.html" class="btn-secondary">Login</a>
+                        <a href="../index.html" class="btn-primary">Register</a>
+                    </div>
+                    <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Admin Hero Section -->
+        <section class="admin-hero" id="adminHero">
+            <div class="hero-content">
+                <h1>Admin Panel</h1>
+                <p class="hero-subtitle">Manage Ticket Submissions</p>
+                <p class="hero-description">
+                    Control the chaos! Review and manage all ticket purchase submissions from the underground music scene.
+                </p>
+                <div class="hero-cta">
+                    <button class="btn-primary" onclick="refreshSubmissions()">
+                        <i class="fas fa-sync-alt"></i> Refresh
+                    </button>
+                    <button class="btn-secondary" onclick="exportData()">
+                        <i class="fas fa-download"></i> Export
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Admin Stats Section -->
+        <section class="admin-stats" id="adminStats">
+            <div class="section-container">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-ticket-alt"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="totalSubmissions">0</h3>
+                            <p>Total Submissions</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="pendingSubmissions">0</h3>
+                            <p>Pending Review</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="confirmedSubmissions">0</h3>
+                            <p>Confirmed</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-money-bill-wave"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="totalRevenue">₱0</h3>
+                            <p>Total Revenue</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Submissions Section -->
+        <section class="admin-submissions" id="adminSubmissions">
+            <div class="section-container">
+                <div class="section-header">
+                    <h2 class="section-title">Ticket Submissions</h2>
+                    <p class="section-subtitle">Review and manage purchase requests</p>
+                </div>
+                
+                <div class="filter-controls">
+                    <div class="filter-group">
+                        <label for="statusFilter">Status</label>
+                        <select id="statusFilter" class="filter-select">
+                            <option value="">All Status</option>
+                            <option value="pending">Pending</option>
+                            <option value="confirmed">Confirmed</option>
+                            <option value="rejected">Rejected</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="searchFilter">Search</label>
+                        <input type="text" id="searchFilter" class="filter-input" placeholder="Search by name or event...">
+                    </div>
+                    
+                    <button class="btn-primary" onclick="applyFilters()">Apply Filters</button>
+                    <button class="btn-secondary" onclick="clearFilters()">Clear</button>
+                </div>
+                
+                <div class="submissions-loading" id="submissionsLoading">
+                    <div class="loading-spinner"></div>
+                    <p>Loading submissions...</p>
+                </div>
+                
+                <div class="submissions-grid" id="submissionsGrid">
+                    <!-- Submissions will be loaded here -->
+                </div>
+                
+                <div class="submissions-pagination" id="submissionsPagination">
+                    <button id="loadMoreBtn" class="btn-primary" style="display: none;">Load More</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Submission Details Modal -->
+        <div class="submission-modal" id="submissionModal">
+            <div class="modal-overlay" id="modalOverlay"></div>
+            <div class="modal-content">
+                <button class="modal-close" id="modalClose">
+                    <i class="fas fa-times"></i>
+                </button>
+                
+                <div class="modal-header">
+                    <h2>Submission Details</h2>
+                    <div class="submission-status" id="modalStatus">
+                        <span id="modalStatusBadge">Pending</span>
+                    </div>
+                </div>
+                
+                <div class="modal-body">
+                    <div class="submission-info">
+                        <div class="info-section">
+                            <h3>Purchase Information</h3>
+                            <div class="info-grid">
+                                <div class="info-item">
+                                    <label>Purchase ID:</label>
+                                    <span id="modalPurchaseId">#000000</span>
+                                </div>
+                                <div class="info-item">
+                                    <label>Event:</label>
+                                    <span id="modalEventName">Event Name</span>
+                                </div>
+                                <div class="info-item">
+                                    <label>Quantity:</label>
+                                    <span id="modalQuantity">0</span>
+                                </div>
+                                <div class="info-item">
+                                    <label>Total Amount:</label>
+                                    <span id="modalTotalAmount">₱0.00</span>
+                                </div>
+                                <div class="info-item">
+                                    <label>Purchase Date:</label>
+                                    <span id="modalPurchaseDate">Date</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="info-section">
+                            <h3>Customer Information</h3>
+                            <div class="info-grid">
+                                <div class="info-item">
+                                    <label>Account Name:</label>
+                                    <span id="modalAccountName">Name</span>
+                                </div>
+                                <div class="info-item">
+                                    <label>Phone Number:</label>
+                                    <span id="modalPhoneNumber">Phone</span>
+                                </div>
+                                <div class="info-item">
+                                    <label>Payment Method:</label>
+                                    <span id="modalPaymentMethod">Method</span>
+                                </div>
+                                <div class="info-item">
+                                    <label>Notes:</label>
+                                    <span id="modalNotes">None</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="info-section">
+                            <h3>Receipt Proof</h3>
+                            <div class="receipt-preview">
+                                <img id="modalReceiptImage" src="" alt="Receipt">
+                                <a id="modalReceiptLink" href="#" target="_blank" class="btn-secondary">
+                                    <i class="fas fa-external-link-alt"></i> View Full Receipt
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="modal-footer">
+                    <button class="btn-success" id="confirmBtn">Confirm</button>
+                    <button class="btn-danger" id="rejectBtn">Reject</button>
+                    <button class="btn-secondary" id="closeModalBtn">Close</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-container">
+                <div class="footer-content">
+                    <div class="footer-section">
+                        <h3>Lost Boys Club</h3>
+                        <p>Where underground music comes alive in the heart of the city.</p>
+                        <div class="footer-social">
+                            <a href="#"><i class="fab fa-facebook"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-youtube"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="footer-section">
+                        <h4>Quick Links</h4>
+                        <ul>
+                            <li><a href="landing.html#home">Home</a></li>
+                            <li><a href="events.html">Events</a></li>
+                            <li><a href="bands.html">Bands</a></li>
+                            <li><a href="admin.html">Admin</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-section">
+                        <h4>Contact</h4>
+                        <p><i class="fas fa-map-marker-alt"></i> 123 Music Street, Manila</p>
+                        <p><i class="fas fa-phone"></i> +63 2 123 4567</p>
+                        <p><i class="fas fa-envelope"></i> info@lostboysclub.com</p>
+                    </div>
+                </div>
+                
+                <div class="footer-bottom">
+                    <p>&copy; 2026 Lost Boys Club. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="../assets/js/admin.js"></script>
+</body>
+</html>

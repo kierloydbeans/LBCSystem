@@ -29,16 +29,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 e.poster_image_url,
                 v.name as venue_name,
                 v.address as venue_address,
-                v.capacity as venue_capacity,
-                GROUP_CONCAT(
-                    DISTINCT CONCAT(b.name, '|', b.genre, '|', b.facebook_url, '|', b.is_lbc_band, '|', eb.is_headliner)
-                    ORDER BY eb.performance_order
-                    SEPARATOR ';;'
-                ) as bands_data
+                v.capacity as venue_capacity
             FROM events e
             LEFT JOIN venues v ON e.venue_id = v.id
-            LEFT JOIN event_bands eb ON e.id = eb.event_id
-            LEFT JOIN bands b ON eb.band_id = b.id
             WHERE e.is_active = 1
         ';
         
@@ -62,27 +55,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         
         $events = $stmt->fetchAll();
         
-        // Process bands data for each event
+        // Fetch bands for each event separately
         foreach ($events as &$event) {
-            $bands = [];
-            if (!empty($event['bands_data'])) {
-                $bandEntries = explode(';;', $event['bands_data']);
-                foreach ($bandEntries as $bandEntry) {
-                    $bandParts = explode('|', $bandEntry);
-                    if (count($bandParts) >= 5) {
-                        $bands[] = [
-                            'name' => $bandParts[0],
-                            'genre' => $bandParts[1],
-                            'facebook_url' => $bandParts[2],
-                            'is_lbc_band' => (bool)$bandParts[3],
-                            'is_headliner' => (bool)$bandParts[4]
-                        ];
-                    }
-                }
-            }
+            $event['bands'] = [];
             
-            $event['bands'] = $bands;
-            unset($event['bands_data']);
+            // Get bands for this event
+            $bandQuery = '
+                SELECT 
+                    b.name,
+                    b.genre,
+                    b.facebook_url,
+                    b.is_lbc_band,
+                    eb.is_headliner,
+                    eb.performance_order
+                FROM event_bands eb
+                LEFT JOIN bands b ON eb.band_id = b.id
+                WHERE eb.event_id = :event_id
+                ORDER BY eb.performance_order ASC
+            ';
+            
+            $bandStmt = $db->prepare($bandQuery);
+            $bandStmt->bindParam(':event_id', $event['id'], PDO::PARAM_INT);
+            $bandStmt->execute();
+            $bands = $bandStmt->fetchAll(PDO::FETCH_ASSOC);
+            
+            // Process bands data
+            foreach ($bands as $band) {
+                $event['bands'][] = [
+                    'name' => $band['name'],
+                    'genre' => $band['genre'],
+                    'facebook_url' => $band['facebook_url'],
+                    'is_lbc_band' => (bool)$band['is_lbc_band'],
+                    'is_headliner' => (bool)$band['is_headliner']
+                ];
+            }
             
             // Format event date
             $eventDate = new DateTime($event['event_date']);

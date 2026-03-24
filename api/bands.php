@@ -50,10 +50,16 @@ try {
             $band['created_at'] = date('Y-m-d H:i:s', strtotime($band['created_at']));
             $band['updated_at'] = date('Y-m-d H:i:s', strtotime($band['updated_at']));
             
-            // Clean up band_image path and ensure it's not null
+            // Handle band_image path
             if ($band['band_image']) {
-                // Remove quotes and convert backslashes if needed
-                $band['band_image'] = stripslashes(trim($band['band_image'], '"'));
+                // Remove quotes and clean up the path
+                $cleanPath = stripslashes(trim($band['band_image'], '"'));
+                
+                // Extract just the filename if it's a full path
+                $filename = basename($cleanPath);
+                
+                // Construct the proper URL path to the images folder
+                $band['band_image'] = 'assets/images/' . $filename;
             } else {
                 $band['band_image'] = null;
             }

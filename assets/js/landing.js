@@ -35,6 +35,23 @@ function initializeAuth() {
         // Redirect to login if not authenticated
         window.location.href = '../index.html';
     }
+    
+    // Check authentication
+    function checkAuth() {
+        const authToken = localStorage.getItem('lbc_token') || sessionStorage.getItem('lbc_token');
+        const userMenu = document.getElementById('userMenu');
+        const loginRegisterBtns = document.getElementById('loginRegisterBtns');
+
+        if (authToken) {
+            // User is authenticated, show user menu
+            if (userMenu) userMenu.style.display = 'flex';
+            if (loginRegisterBtns) loginRegisterBtns.style.display = 'none';
+        } else {
+            // User is not authenticated, hide user menu
+            if (userMenu) userMenu.style.display = 'none';
+            if (loginRegisterBtns) loginRegisterBtns.style.display = 'flex';
+        }
+    }
 }
 
 function updateUserInterface(user) {
@@ -187,8 +204,8 @@ function loadEvents() {
     // Show loading state
     eventsGrid.innerHTML = `
         <div style="grid-column: 1 / -1; text-align: center; padding: 3rem;">
-            <div style="display: inline-block; width: 50px; height: 50px; border: 3px solid #60a5fa; border-top: 3px solid transparent; border-radius: 50%; animation: spin 1s linear infinite;"></div>
-            <p style="margin-top: 1rem; color: #9ca3af;">Loading events...</p>
+            <div style="display: inline-block; width: 50px; height: 50px; border: 3px solid #0066ff; border-top: 3px solid transparent; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+            <p style="margin-top: 1rem; color: #66b3ff; font-family: 'Special Elite', cursive; text-transform: uppercase; letter-spacing: 1px;">Loading events...</p>
         </div>
     `;
     
@@ -202,18 +219,24 @@ function loadEvents() {
     `;
     document.head.appendChild(style);
     
-    // Fetch events from API
+    // Fetch upcoming events from API (limit to 6 for carousel)
     fetch('../api/events.php?upcoming=true&limit=6', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
         }
     })
-    .then(response => response.json())
+    .then(response => {
+        console.log('Response status:', response.status);
+        return response.json();
+    })
     .then(data => {
+        console.log('API Response:', data);
         if (data.success && data.data.events.length > 0) {
+            console.log('Events found:', data.data.events.length);
             renderEvents(data.data.events);
         } else {
+            console.log('No events found or API error');
             renderNoEvents();
         }
     })
@@ -274,7 +297,7 @@ function renderEvents(events) {
                         </div>
                     </div>
                     <div class="event-price">
-                        ₱${event.base_price.toFixed(2)}
+                        ₱${parseFloat(event.base_price).toFixed(2)}
                         ${statusBadge}
                     </div>
                     <button class="event-action" onclick="event.stopPropagation(); purchaseTicket(${event.id})">
@@ -314,21 +337,33 @@ function renderEvents(events) {
 function getStatusBadge(status) {
     switch (status) {
         case 'sold_out':
-            return '<span style="background: #ef4444; color: white; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.75rem; margin-left: 0.5rem;">SOLD OUT</span>';
+            return '<span style="background: linear-gradient(45deg, #ff3333, #cc0000); color: white; padding: 0.25rem 0.5rem; border-radius: 0; font-size: 0.75rem; margin-left: 0.5rem; font-family: \'Special Elite\', cursive; text-transform: uppercase; letter-spacing: 1px; border: 2px solid #000; box-shadow: 1px 1px 0px #000, 2px 2px 0px rgba(204, 0, 0, 0.3);">SOLD OUT</span>';
         case 'limited':
-            return '<span style="background: #f59e0b; color: white; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.75rem; margin-left: 0.5rem;">LIMITED</span>';
+            return '<span style="background: linear-gradient(45deg, #ff8800, #cc6600); color: white; padding: 0.25rem 0.5rem; border-radius: 0; font-size: 0.75rem; margin-left: 0.5rem; font-family: \'Special Elite\', cursive; text-transform: uppercase; letter-spacing: 1px; border: 2px solid #000; box-shadow: 1px 1px 0px #000, 2px 2px 0px rgba(204, 102, 0, 0.3);">LIMITED</span>';
         default:
             return '';
     }
 }
 
+function renderNoCurrentMonthEvents() {
+    const eventsGrid = document.getElementById('eventsGrid');
+    eventsGrid.innerHTML = `
+        <div style="grid-column: 1 / -1; text-align: center; padding: 3rem; transform: rotate(-1deg);">
+            <i class="fas fa-calendar-times" style="font-size: 3rem; color: #0066ff; margin-bottom: 1rem; text-shadow: 2px 2px 0px #000; animation: flicker 3s infinite; transform: rotate(-5deg);"></i>
+            <h3 style="font-family: 'Permanent Marker', cursive; color: #0066ff; margin-bottom: 1rem; font-size: 2rem; text-transform: uppercase; letter-spacing: 2px; text-shadow: 3px 3px 0px #000, -1px -1px 0px #000, 1px -1px 0px #000, -1px 1px 0px #000, 1px 1px 0px #000, 0 0 15px rgba(0, 102, 255, 0.5); transform: rotate(-2deg);">No Events This Month!!!</h3>
+            <p style="font-family: 'Special Elite', cursive; color: #66b3ff; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 1px; text-shadow: 1px 1px 0px #000;">Check out our upcoming events for next month!!!</p>
+            <a href="events.html" class="btn-primary" style="display: inline-block; margin-top: 1rem;">View All Events</a>
+        </div>
+    `;
+}
+
 function renderNoEvents() {
     const eventsGrid = document.getElementById('eventsGrid');
     eventsGrid.innerHTML = `
-        <div style="grid-column: 1 / -1; text-align: center; padding: 3rem;">
-            <i class="fas fa-calendar-times" style="font-size: 3rem; color: #60a5fa; margin-bottom: 1rem;"></i>
-            <h3 style="color: #fff; margin-bottom: 1rem;">No Upcoming Events</h3>
-            <p style="color: #9ca3af;">Check back soon for new events and performances!</p>
+        <div style="grid-column: 1 / -1; text-align: center; padding: 3rem; transform: rotate(-1deg);">
+            <i class="fas fa-calendar-times" style="font-size: 3rem; color: #0066ff; margin-bottom: 1rem; text-shadow: 2px 2px 0px #000; animation: flicker 3s infinite; transform: rotate(-5deg);"></i>
+            <h3 style="font-family: 'Permanent Marker', cursive; color: #0066ff; margin-bottom: 1rem; font-size: 2rem; text-transform: uppercase; letter-spacing: 2px; text-shadow: 3px 3px 0px #000, -1px -1px 0px #000, 1px -1px 0px #000, -1px 1px 0px #000, 1px 1px 0px #000, 0 0 15px rgba(0, 102, 255, 0.5); transform: rotate(-2deg);">No Upcoming Events!!!</h3>
+            <p style="font-family: 'Special Elite', cursive; color: #66b3ff; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 1px; text-shadow: 1px 1px 0px #000; background: linear-gradient(135deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 26, 51, 0.5) 100%); padding: 1.5rem; border: 2px solid rgba(0, 102, 255, 0.3); position: relative;">Check back soon for new events and performances!!!</p>
         </div>
     `;
 }
@@ -336,13 +371,11 @@ function renderNoEvents() {
 function renderError() {
     const eventsGrid = document.getElementById('eventsGrid');
     eventsGrid.innerHTML = `
-        <div style="grid-column: 1 / -1; text-align: center; padding: 3rem;">
-            <i class="fas fa-exclamation-triangle" style="font-size: 3rem; color: #ef4444; margin-bottom: 1rem;"></i>
-            <h3 style="color: #fff; margin-bottom: 1rem;">Unable to Load Events</h3>
-            <p style="color: #9ca3af;">Please try again later or contact support.</p>
-            <button onclick="loadEvents()" style="margin-top: 1rem; background: #3b82f6; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 6px; cursor: pointer;">
-                Try Again
-            </button>
+        <div style="grid-column: 1 / -1; text-align: center; padding: 3rem; transform: rotate(1deg);">
+            <i class="fas fa-exclamation-triangle" style="font-size: 3rem; color: #ff3333; margin-bottom: 1rem; text-shadow: 2px 2px 0px #000; animation: flicker 3s infinite; transform: rotate(-5deg);"></i>
+            <h3 style="font-family: 'Permanent Marker', cursive; color: #ff3333; margin-bottom: 1rem; font-size: 2rem; text-transform: uppercase; letter-spacing: 2px; text-shadow: 3px 3px 0px #000, -1px -1px 0px #000, 1px -1px 0px #000, -1px 1px 0px #000, 1px 1px 0px #000, 0 0 15px rgba(255, 51, 51, 0.5); transform: rotate(-2deg);">Unable to Load Events!!!</h3>
+            <p style="font-family: 'Special Elite', cursive; color: #66b3ff; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 1px; text-shadow: 1px 1px 0px #000;">Please try again later or contact support!!!</p>
+            <button onclick="loadEvents()" style="margin-top: 1rem; background: linear-gradient(45deg, #0066ff, #003d99); color: white; border: 3px solid #0066ff; padding: 0.75rem 1.5rem; border-radius: 0; cursor: pointer; font-family: 'Special Elite', cursive; text-transform: uppercase; letter-spacing: 2px; text-shadow: 1px 1px 0px #000; box-shadow: 2px 2px 0px #000, 4px 4px 0px rgba(0, 102, 255, 0.3); transform: rotate(-1deg);">Try Again</button>
         </div>
     `;
 }

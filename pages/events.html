@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events - Lost Boys Club</title>
+    <link rel="stylesheet" href="../assets/css/landing.css">
+    <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Bangers&family=Creepster&family=Special+Elite&family=UnifrakturMaguntia&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="landing-container">
+        <!-- Navigation -->
+        <nav class="navbar" id="navbar">
+            <div class="nav-container">
+                <a href="landing.html" class="nav-logo">
+                    <img src="../assets/images/lbc_logo.jpg" alt="Lost Boys Club" class="nav-logo-img">
+                    Lost Boys Club
+                </a>
+                
+                <div class="nav-menu" id="navMenu">
+                    <a href="landing.html#home" class="nav-link">Home</a>
+                    <a href="events.html" class="nav-link active">Events</a>
+                    <a href="bands.html" class="nav-link">Bands</a>
+                    <a href="landing.html#about" class="nav-link">About</a>
+                    <a href="#contact" class="nav-link">Contact</a>
+                </div>
+                
+                <div class="nav-actions">
+                    <div id="userMenu" style="display: none;" class="user-menu">
+                        <span id="userName">User</span>
+                        <div class="user-dropdown">
+                            <a href="#profile">Profile</a>
+                            <a href="#tickets">My Tickets</a>
+                            <a href="#" id="logoutBtn">Logout</a>
+                        </div>
+                    </div>
+                    <div id="loginRegisterBtns" class="auth-buttons">
+                        <a href="../index.html" class="btn-secondary">Login</a>
+                        <a href="../index.html" class="btn-primary">Register</a>
+                    </div>
+                    <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Events Hero Section -->
+        <section class="events-hero" id="eventsHero">
+            <div class="hero-content">
+                <h1>Events Calendar</h1>
+                <p class="hero-subtitle">All Upcoming Shows & Performances</p>
+                <p class="hero-description">
+                    Explore our complete lineup of upcoming events at Lost Boys Club. From punk rock nights to electronic festivals, find your perfect musical experience.
+                </p>
+                <div class="hero-cta">
+                    <a href="#eventsList" class="btn-primary">Browse Events</a>
+                    <a href="landing.html#home" class="btn-secondary">Back to Home</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Events Filter Section -->
+        <section class="events-filter" id="eventsFilter">
+            <div class="section-container">
+                <div class="filter-header">
+                    <h2 class="section-title">Filter Events</h2>
+                    <p class="section-subtitle">Find exactly what you're looking for</p>
+                </div>
+                
+                <div class="filter-controls">
+                    <div class="filter-group">
+                        <label for="genreFilter">Genre</label>
+                        <select id="genreFilter" class="filter-select">
+                            <option value="">All Genres</option>
+                            <option value="Punk">Punk</option>
+                            <option value="Rock">Rock</option>
+                            <option value="Electronic">Electronic</option>
+                            <option value="Indie">Indie</option>
+                            <option value="Metal">Metal</option>
+                            <option value="Jazz">Jazz</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="monthFilter">Month</label>
+                        <select id="monthFilter" class="filter-select">
+                            <option value="">All Months</option>
+                            <option value="2026-04">April 2026</option>
+                            <option value="2026-05">May 2026</option>
+                            <option value="2026-06">June 2026</option>
+                            <option value="2026-07">July 2026</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="priceFilter">Price Range</label>
+                        <select id="priceFilter" class="filter-select">
+                            <option value="">All Prices</option>
+                            <option value="0-200">Under ₱200</option>
+                            <option value="200-300">₱200 - ₱300</option>
+                            <option value="300-400">₱300 - ₱400</option>
+                            <option value="400+">₱400+</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="availabilityFilter">Availability</label>
+                        <select id="availabilityFilter" class="filter-select">
+                            <option value="">All Events</option>
+                            <option value="available">Available</option>
+                            <option value="limited">Limited Tickets</option>
+                        </select>
+                    </div>
+                    
+                    <button id="applyFilters" class="btn-primary">Apply Filters</button>
+                    <button id="clearFilters" class="btn-secondary">Clear</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Events List Section -->
+        <section class="events-list" id="eventsList">
+            <div class="section-container">
+                <div class="section-header">
+                    <h2 class="section-title">All Events</h2>
+                    <p class="section-subtitle">Complete list of upcoming performances</p>
+                </div>
+                
+                <div class="events-loading" id="eventsLoading">
+                    <div class="loading-spinner"></div>
+                    <p>Loading events...</p>
+                </div>
+                
+                <div class="events-grid" id="eventsGrid">
+                    <!-- Events will be loaded here from API -->
+                </div>
+                
+                <div class="events-pagination" id="eventsPagination">
+                    <button id="loadMoreBtn" class="btn-primary" style="display: none;">Load More Events</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Event Details Modal -->
+        <div class="event-modal" id="eventModal">
+            <div class="modal-overlay" id="modalOverlay"></div>
+            <div class="modal-content">
+                <button class="modal-close" id="modalClose">
+                    <i class="fas fa-times"></i>
+                </button>
+                
+                <div class="modal-header">
+                    <h2 id="modalEventTitle">Event Title</h2>
+                    <div class="modal-date">
+                        <i class="fas fa-calendar"></i>
+                        <span id="modalEventDate">Date</span>
+                    </div>
+                </div>
+                
+                <div class="modal-body">
+                    <div class="modal-poster">
+                        <img id="modalEventPoster" src="" alt="Event Poster">
+                        <div class="modal-date-badge">
+                            <div id="modalEventDay">15</div>
+                            <div id="modalEventMonth">MAR</div>
+                        </div>
+                    </div>
+                    
+                    <div class="modal-info">
+                        <div class="modal-description">
+                            <h3>About This Event</h3>
+                            <p id="modalEventDescription">Event description goes here...</p>
+                        </div>
+                        
+                        <div class="modal-venue">
+                            <h3>Venue</h3>
+                            <div class="venue-info">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <div>
+                                    <h4 id="modalVenueName">Venue Name</h4>
+                                    <p id="modalVenueAddress">Venue Address</p>
+                                    <p id="modalVenueCapacity">Capacity: 200</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="modal-bands">
+                            <h3>Performing Bands</h3>
+                            <div id="modalEventBands">
+                                <!-- Bands will be loaded here -->
+                            </div>
+                        </div>
+                        
+                        <div class="modal-tickets">
+                            <h3>Ticket Information</h3>
+                            <div class="ticket-info">
+                                <div class="ticket-price">
+                                    <span class="price-label">Base Price</span>
+                                    <span class="price-value" id="modalEventPrice">₱350</span>
+                                </div>
+                                <div class="ticket-availability">
+                                    <span class="availability-label">Available Tickets</span>
+                                    <span class="availability-value" id="modalEventAvailability">120 / 150</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="modal-footer">
+                    <button id="purchaseTicketBtn" class="btn-primary">Get Tickets</button>
+                    <button class="btn-secondary" id="closeModalBtn">Close</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ticket Purchase Modal -->
+        <div class="ticket-purchase-modal" id="ticketPurchaseModal">
+            <div class="modal-overlay" id="ticketModalOverlay"></div>
+            <div class="modal-content">
+                <button class="modal-close" id="ticketModalClose">
+                    <i class="fas fa-times"></i>
+                </button>
+                
+                <div class="modal-header">
+                    <h2>Purchase Tickets</h2>
+                    <div class="modal-event-info">
+                        <h3 id="ticketModalEventTitle">Event Title</h3>
+                        <p id="ticketModalEventDate">Date and Time</p>
+                    </div>
+                </div>
+                
+                <div class="modal-body">
+                    <form id="ticketPurchaseForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="accountName">Account Name *</label>
+                                <input type="text" id="accountName" name="account_name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="phoneNumber">Phone Number *</label>
+                                <input type="tel" id="phoneNumber" name="phone_number" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="quantity">Number of Tickets *</label>
+                                <input type="number" id="quantity" name="quantity" min="1" max="10" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="unitPrice">Unit Price</label>
+                                <input type="text" id="unitPrice" name="unit_price" readonly>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="totalAmount">Total Amount</label>
+                            <input type="text" id="totalAmount" name="total_amount" readonly>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="paymentMethod">Payment Method</label>
+                            <select id="paymentMethod" name="payment_method" required>
+                                <option value="">Select Payment Method</option>
+                                <option value="gcash">GCash</option>
+                                <option value="maya">Maya</option>
+                                <option value="bank_transfer">Bank Transfer</option>
+                                <option value="paypal">PayPal</option>
+                                <option value="cash">Cash</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="receiptImage">Receipt Image *</label>
+                            <div class="file-upload">
+                                <input type="file" id="receiptImage" name="receipt_image" accept="image/*" required>
+                                <div class="file-upload-label">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                    <span>Click to upload receipt image</span>
+                                </div>
+                                <div class="file-preview" id="receiptPreview">
+                                    <img id="receiptPreviewImg" src="" alt="Receipt preview">
+                                    <button type="button" id="removeReceipt" class="remove-btn">Remove</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="notes">Additional Notes (Optional)</label>
+                            <textarea id="notes" name="notes" rows="3" placeholder="Any special requests or notes..."></textarea>
+                        </div>
+                        
+                        <div class="ticket-summary">
+                            <h4>Order Summary</h4>
+                            <div class="summary-row">
+                                <span>Event:</span>
+                                <span id="summaryEvent">Event Name</span>
+                            </div>
+                            <div class="summary-row">
+                                <span>Quantity:</span>
+                                <span id="summaryQuantity">0</span>
+                            </div>
+                            <div class="summary-row">
+                                <span>Unit Price:</span>
+                                <span id="summaryPrice">₱0.00</span>
+                            </div>
+                            <div class="summary-row total">
+                                <span>Total:</span>
+                                <span id="summaryTotal">₱0.00</span>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="submit" form="ticketPurchaseForm" class="btn-primary" id="submitTicketPurchase">Submit Purchase</button>
+                    <button type="button" class="btn-secondary" id="cancelTicketPurchase">Cancel</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-container">
+                <div class="footer-content">
+                    <div class="footer-section">
+                        <h3>Lost Boys Club</h3>
+                        <p>Where underground music comes alive in the heart of the city.</p>
+                        <div class="footer-social">
+                            <a href="#"><i class="fab fa-facebook"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-youtube"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="footer-section">
+                        <h4>Quick Links</h4>
+                        <ul>
+                            <li><a href="landing.html#home">Home</a></li>
+                            <li><a href="events.html">Events</a></li>
+                            <li><a href="bands.html">Bands</a></li>
+                            <li><a href="landing.html#about">About</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-section">
+                        <h4>Contact</h4>
+                        <p><i class="fas fa-map-marker-alt"></i> 123 Music Street, Manila</p>
+                        <p><i class="fas fa-phone"></i> +63 2 123 4567</p>
+                        <p><i class="fas fa-envelope"></i> info@lostboysclub.com</p>
+                    </div>
+                </div>
+                
+                <div class="footer-bottom">
+                    <p>&copy; 2026 Lost Boys Club. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="../assets/js/events.js"></script>
+</body>
+</html>

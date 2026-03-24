@@ -137,6 +137,10 @@ function verifyToken($token) {
     return hash_equals($signature, $base64UrlExpectedSignature) ? $payloadData : false;
 }
 
+function validateJWT($token) {
+    return verifyToken($token);
+}
+
 function sendJsonResponse($success, $message, $data = null, $httpCode = 200) {
     http_response_code($httpCode);
     $response = [

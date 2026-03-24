@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Tickets - Lost Boys Club</title>
+    <link rel="stylesheet" href="../assets/css/landing.css">
+    <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Bangers&family=Creepster&family=Special+Elite&family=UnifrakturMaguntia&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="landing-container">
+        <!-- Navigation -->
+        <nav class="navbar" id="navbar">
+            <div class="nav-container">
+                <a href="landing.html" class="nav-logo">
+                    <img src="../assets/images/lbc_logo.jpg" alt="Lost Boys Club" class="nav-logo-img">
+                    Lost Boys Club
+                </a>
+                
+                <div class="nav-menu" id="navMenu">
+                    <a href="landing.html#home" class="nav-link">Home</a>
+                    <a href="events.html" class="nav-link">Events</a>
+                    <a href="bands.html" class="nav-link">Bands</a>
+                    <a href="tickets.html" class="nav-link active">My Tickets</a>
+                    <a href="landing.html#about" class="nav-link">About</a>
+                </div>
+                
+                <div class="nav-actions">
+                    <div id="userMenu" style="display: none;" class="user-menu">
+                        <span id="userName">User</span>
+                        <div class="user-dropdown">
+                            <a href="#profile">Profile</a>
+                            <a href="#tickets">My Tickets</a>
+                            <a href="#" id="logoutBtn">Logout</a>
+                        </div>
+                    </div>
+                    <div id="loginRegisterBtns" class="auth-buttons">
+                        <a href="../index.html" class="btn-secondary">Login</a>
+                        <a href="../index.html" class="btn-primary">Register</a>
+                    </div>
+                    <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Tickets Hero Section -->
+        <section class="tickets-hero" id="ticketsHero">
+            <div class="hero-content">
+                <h1>My Tickets</h1>
+                <p class="hero-subtitle">Your Digital Passes to Underground Music</p>
+                <p class="hero-description">
+                    View all your purchased tickets for upcoming events. Each ticket is your gateway to the raw energy of the underground music scene.
+                </p>
+                <div class="hero-cta">
+                    <a href="events.html" class="btn-primary">Browse Events</a>
+                    <a href="landing.html#home" class="btn-secondary">Back to Home</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tickets List Section -->
+        <section class="tickets-list" id="ticketsList">
+            <div class="section-container">
+                <div class="section-header">
+                    <h2 class="section-title">Your Tickets</h2>
+                    <p class="section-subtitle">All your purchased event tickets</p>
+                </div>
+                
+                <div class="filter-controls">
+                    <div class="filter-group">
+                        <label for="statusFilter">Status</label>
+                        <select id="statusFilter" class="filter-select">
+                            <option value="">All Status</option>
+                            <option value="active">Active</option>
+                            <option value="used">Used</option>
+                            <option value="cancelled">Cancelled</option>
+                        </select>
+                    </div>
+                    
+                    <button class="btn-primary" onclick="applyFilters()">Apply Filters</button>
+                    <button class="btn-secondary" onclick="clearFilters()">Clear</button>
+                </div>
+                
+                <div class="tickets-loading" id="ticketsLoading">
+                    <div class="loading-spinner"></div>
+                    <p>Loading tickets...</p>
+                </div>
+                
+                <div class="tickets-grid" id="ticketsGrid">
+                    <!-- Tickets will be loaded here from API -->
+                </div>
+                
+                <div class="tickets-pagination" id="ticketsPagination">
+                    <button id="loadMoreBtn" class="btn-primary" style="display: none;">Load More Tickets</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Ticket Details Modal -->
+        <div class="ticket-modal" id="ticketModal">
+            <div class="modal-overlay" id="modalOverlay"></div>
+            <div class="modal-content">
+                <button class="modal-close" id="modalClose">
+                    <i class="fas fa-times"></i>
+                </button>
+                
+                <div class="modal-header">
+                    <h2>Ticket Details</h2>
+                    <div class="ticket-status" id="modalStatus">
+                        <span id="modalStatusBadge">Active</span>
+                    </div>
+                </div>
+                
+                <div class="modal-body">
+                    <div class="ticket-info">
+                        <div class="ticket-number">
+                            <h3>Ticket Number</h3>
+                            <span id="modalTicketNumber">TCKT000001-001</span>
+                        </div>
+                        
+                        <div class="event-info">
+                            <h3>Event</h3>
+                            <div class="event-details">
+                                <p><strong>Event:</strong> <span id="modalEventTitle">Event Name</span></p>
+                                <p><strong>Date:</strong> <span id="modalEventDate">Date</span></p>
+                                <p><strong>Time:</strong> <span id="modalEventTime">Time</span></p>
+                            </div>
+                        </div>
+                        
+                        <div class="holder-info">
+                            <h3>Ticket Holder</h3>
+                            <div class="holder-details">
+                                <p><strong>Name:</strong> <span id="modalHolderName">Name</span></p>
+                                <p><strong>Phone:</strong> <span id="modalHolderPhone">Phone</span></p>
+                            </div>
+                        </div>
+                        
+                        <div class="ticket-meta">
+                            <h3>Ticket Information</h3>
+                            <div class="meta-details">
+                                <p><strong>Purchase Date:</strong> <span id="modalPurchaseDate">Date</span></p>
+                                <p><strong>Issued Date:</strong> <span id="modalIssuedDate">Date</span></p>
+                                <p><strong>Price Paid:</strong> <span id="modalPrice">₱0.00</span></p>
+                            </div>
+                        </div>
+                        
+                        <div class="qr-code">
+                            <h3>QR Code</h3>
+                            <div class="qr-preview">
+                                <img id="modalQRCode" src="" alt="QR Code">
+                                <a id="modalQRLink" href="#" target="_blank" class="btn-secondary">
+                                    <i class="fas fa-qrcode"></i> View Full QR
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="modal-footer">
+                    <button class="btn-primary" id="downloadTicketBtn">
+                        <i class="fas fa-download"></i> Download Ticket
+                    </button>
+                    <button class="btn-secondary" id="closeModalBtn">Close</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-container">
+                <div class="footer-content">
+                    <div class="footer-section">
+                        <h3>Lost Boys Club</h3>
+                        <p>Where underground music comes alive in the heart of the city.</p>
+                        <div class="footer-social">
+                            <a href="#"><i class="fab fa-facebook"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-youtube"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="footer-section">
+                        <h4>Quick Links</h4>
+                        <ul>
+                            <li><a href="landing.html#home">Home</a></li>
+                            <li><a href="events.html">Events</a></li>
+                            <li><a href="bands.html">Bands</a></li>
+                            <li><a href="tickets.html">My Tickets</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-section">
+                        <h4>Contact</h4>
+                        <p><i class="fas fa-map-marker-alt"></i> 123 Music Street, Manila</p>
+                        <p><i class="fas fa-phone"></i> +63 2 123 4567</p>
+                        <p><i class="fas fa-envelope"></i> info@lostboysclub.com</p>
+                    </div>
+                </div>
+                
+                <div class="footer-bottom">
+                    <p>&copy; 2026 Lost Boys Club. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="../assets/js/tickets.js"></script>
+</body>
+</html>
